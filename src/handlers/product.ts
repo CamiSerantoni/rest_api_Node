@@ -3,6 +3,22 @@ import Product from '../models/Product.model';
 
 
 
+export const getProducts = async (req : Request, res : Response) => {
+try{
+   //Para obtener datos es bueno usar finds
+   const products =  await Product.findAll({
+      //si quieres darle orden a la respuesta 
+      order: [['id', 'DESC']],
+      //Si quieres que no se muestren ciertos elementos /campos   
+      //attributes:{exclude: ['createdAt', 'updatedAt', 'availability']},
+      //si quieres limitar la respuesta
+      // limit: 2
+   });
+   res.json({data: products});
+}catch(err){
+   console.log(err)
+}
+}
 export const createProduct = async (req : Request, res : Response) => {
  try{
     const product =  await Product.create(req.body);
@@ -11,3 +27,4 @@ export const createProduct = async (req : Request, res : Response) => {
     console.log(err)
  }
 }
+
